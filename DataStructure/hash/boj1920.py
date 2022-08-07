@@ -4,7 +4,7 @@
 import sys
 
 n = int(sys.stdin.readline())
-n_list = list(map(int, sys.stdin.readline().split()))
+n_list = set(map(int, sys.stdin.readline().split())) # 중복을 제거하기 위해 set 사용
 
 m = int(sys.stdin.readline())
 m_list = list(map(int, sys.stdin.readline().split()))
