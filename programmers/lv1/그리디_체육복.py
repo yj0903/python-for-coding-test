@@ -1,40 +1,26 @@
 # 체육복
 
 def solution(n, lost, reserve):
-    answer = [1] * n
-    count = 0
-
+    clothes = [1] * n  # n명 모두 체육복 1벌씩
+    studentNum = n
     for l in lost:
-        answer[l - 1] -= 1
-
+        clothes[l - 1] -= 1  # 잃어버렸으면 -1
     for r in reserve:
-        answer[r - 1] += 1
+        clothes[r - 1] += 1  # 여분 있으면 +1
 
     for i in range(n):
-        if answer[i] == 0:
-            if i == 0:
-                if answer[i+1] == 2:
-                    answer[i] += 1
-                    answer[i+1] -= 1
-                else:
-                    count += 1
-
-            elif i == n-1:
-                if answer[i-1] == 2:
-                    answer[i] += 1
-                    answer[i-1] -= 1
-                else:
-                    count += 1
+        if clothes[i] == 0:
+            if (i != 0) and (clothes[i - 1] == 2):
+                clothes[i - 1] = 1
+                clothes[i] = 1
+            elif (i != n - 1) and (clothes[i + 1] == 2):
+                clothes[i + 1] = 1
+                clothes[i] = 1
             else:
-                if answer[i-1] == 2:
-                    answer[i] += 1
-                    answer[i-1] -= 1
-                elif answer[i+1] == 2:
-                    answer[i] += 1
-                    answer[i+1] -= 1
-                else:
-                    count += 1
-    return n-count
+                studentNum -= 1
+    return studentNum
 
 
-print(solution(5, [1, 2, 3], [2, 3, 4]))
+print(solution(5, [2, 4], [1, 3, 5]))
+print(solution(5, [2, 4], [3]))
+print(solution(3, [3], [1]))
