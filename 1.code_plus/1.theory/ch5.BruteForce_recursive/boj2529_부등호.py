@@ -5,30 +5,30 @@ arr = list(input().split(' '))
 checked = [True] * 10
 answer = []
 
-def isPossible(ans):
-    for i in range(k):
-        if arr[i] == '<':
-            if ans[i] > ans[i+1]:
-                return False
-        if arr[i] == '>':
-            if ans[i] < ans[i+1]:
-                return False
+
+def possible(x, y, op):
+    if op == '<':
+        if x > y:
+            return False
+    elif op == '>':
+        if x < y:
+            return False
     return True
 
-def solution(check, ans):
-    if len(ans) == k+1:  # 숫자 k개 다 고름
-        # 여기서 부등호 검사하기
-        if isPossible(ans):
-            answer.append((''.join([str(i) for i in ans])))
+
+def solution(index, ans):
+    if len(ans) == k + 1:  # 숫자 k개 다 고름
+        answer.append(ans)
         return
 
     for i in range(10):
-        if check[i]:
-            check[i] = False
-            solution(check, ans + [i])
-            check[i] = True
+        if checked[i]:
+            if index == 0 or possible(ans[index - 1], str(i), arr[index - 1]):
+                checked[i] = False
+                solution(index + 1, ans + str(i))
+                checked[i] = True
 
 
-solution(checked, [])
+solution(0, '')
 print(answer[-1])
 print(answer[0])
